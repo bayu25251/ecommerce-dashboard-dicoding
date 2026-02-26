@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 # =========================
 # Page Config
@@ -24,7 +25,10 @@ st.markdown("---")
 # =========================
 @st.cache_data
 def load_data():
-    df = pd.read_csv("main_data.csv")
+    BASE_DIR = os.path.dirname(__file__)
+    DATA_PATH = os.path.join(BASE_DIR, "main_data.csv")
+
+    df = pd.read_csv(DATA_PATH)
     df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
     df['year_month'] = df['order_purchase_timestamp'].dt.to_period('M').astype(str)
     return df
@@ -138,3 +142,4 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
