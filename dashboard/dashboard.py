@@ -29,8 +29,13 @@ def load_data():
     DATA_PATH = os.path.join(BASE_DIR, "main_data.csv")
 
     df = pd.read_csv(DATA_PATH)
+
+    # Bersihkan nama kolom (anti error spasi & huruf besar)
+    df.columns = df.columns.str.strip().str.lower()
+
     df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
     df['year_month'] = df['order_purchase_timestamp'].dt.to_period('M').astype(str)
+
     return df
 
 df = load_data()
@@ -142,4 +147,5 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
